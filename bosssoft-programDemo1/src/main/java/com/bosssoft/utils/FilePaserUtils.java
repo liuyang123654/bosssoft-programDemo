@@ -13,6 +13,7 @@ package com.bosssoft.utils;
 
 
 import com.alibaba.fastjson.JSON;
+import com.bosssoft.exception.ExceptionHandler;
 import jdk.internal.org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -27,39 +28,37 @@ import java.io.StringReader;
  **/
 public class FilePaserUtils {
     /**
-     * @description: 获取文件字符串的类型，是json还是xml
-     * @author: LiuYang
-     * @date: 2024/05/15 20:19
+     * 获取文件字符串的类型，是json还是xml
+     *
      * @param string
      * @return: java.lang.String
      **/
     static String type = null;
 
-    public static String getType(String string) {
+    public static String getType(String string) throws Exception {
 
         try {
             Object obj = JSON.parse(string);
             return "JSON";
         } catch (Exception e) {
-            //log.info("string is not valid JSON.");
+            ExceptionHandler.handleException(e);
         }
 
         try {
             DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(String.valueOf(new InputSource(new StringReader(string))));
             return "XML";
         } catch (Exception e) {
-            //log.info("Message is not valid XML.");
+            ExceptionHandler.handleException(e);
+            throw e;
         }
-        return null;
     }
 
     /**
+     * 解析字符串，返回对象,xml或者json
+     *
      * @param string
-     * @description: 解析字符串，返回对象,xml或者json
-     * @author: LiuYang
-     * @date: 2024/05/15 20:22
-     * @return: java.lang.Object
-     **/
+     * @return
+     */
     public static Object parse(String string) {
         if (type.equals("JSON")) {
             Object obj = JSON.parse(string);
@@ -67,6 +66,4 @@ public class FilePaserUtils {
         }
         return null;
     }
-
-
 }

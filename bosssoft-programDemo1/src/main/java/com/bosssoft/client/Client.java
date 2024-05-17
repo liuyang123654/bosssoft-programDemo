@@ -13,7 +13,6 @@ package com.bosssoft.client;
 
 import com.bosssoft.basic.ability.SocketManager;
 import com.bosssoft.exception.ExceptionHandler;
-import com.bosssoft.exception.ServiceException;
 import com.bosssoft.utils.EncryptAndDecryptUtils;
 
 import java.io.BufferedReader;
@@ -39,17 +38,16 @@ public class Client {
     public static void main(String[] args) throws IOException, InterruptedException {
         ThreadPoolExecutor threadPool = new ThreadPoolExecutor(2, 5, 2, TimeUnit.SECONDS, new ArrayBlockingQueue<>(10));
 
-
         System.out.println("Connected to server");
         System.out.println("请输入命令:show + ' ' +  文件地址 / send + ID + 文件地址");
         try (SocketManager socketManager = new SocketManager(HOST, PORT)) {
             Scanner scanner = new Scanner(System.in);
             String newCommand = scanner.nextLine();
             String[] commands = newCommand.split(" ");
-            if (commands[0].equals("show")) {
+            if ("show".equals(commands[0])) {
                 // 请求查看文件内容
                 showFileContent(threadPool, socketManager, commands[1]);
-            } else if (commands[0].equals("send")) {
+            } else if ("send".equals(commands[0])) {
                 // 发送文件
                 sendFile(threadPool, socketManager, commands[1], commands[2]);
 
@@ -65,6 +63,15 @@ public class Client {
         }
     }
 
+    /**
+     * 发送文件
+     * 读取文件内容，将文件加密保存到临时位置
+     *
+     * @param threadPool
+     * @param socketManager
+     * @param receiver
+     * @param filePath
+     */
     private static void sendFile(ThreadPoolExecutor threadPool, SocketManager socketManager, String receiver, String filePath) {
         threadPool.submit(() -> {
             try {
@@ -87,7 +94,7 @@ public class Client {
                 //保存加密后的文件到临时位置
                 String tempPath = generateTempFilePath(filePath);
                 Files.write(Paths.get(tempPath), encodedContent.getBytes());
-                String message = "send " + receiver+" " + tempPath;
+                String message = "send " + receiver + " " + tempPath;
                 socketManager.send(message);
                 String response = socketManager.receive();
                 System.out.println(response);
@@ -100,6 +107,13 @@ public class Client {
         });
     }
 
+    /**
+     * 展示文件目录
+     *
+     * @param threadPool
+     * @param socketManager
+     * @param filePath
+     */
     private static void showFileContent(ThreadPoolExecutor threadPool, SocketManager socketManager, String filePath) {
         threadPool.submit(() -> {
             try {
@@ -112,16 +126,21 @@ public class Client {
             }
         });
     }
+
     /**
      * 临时文件路径
+     *
      * @param originalFilePath
      * @return
      */
     private static String generateTempFilePath(String originalFilePath) {
         File originalFile = new File(originalFilePath);
-        String parentDirectory = originalFile.getParent(); // 获取原始文件的父目录
-        String fileName = originalFile.getName(); // 获取原始文件的文件名
+        // 获取原始文件的父目录
+        String parentDirectory = originalFile.getParent();
+        // 获取原始文件的文件名
+        String fileName = originalFile.getName();
         String tempFileName = fileName.substring(0, fileName.lastIndexOf(".")) + "encoded" + fileName.substring(fileName.lastIndexOf("."));
-        return parentDirectory + File.separator + tempFileName; // 构建临时文件路径
+        // 构建临时文件路径
+        return parentDirectory + File.separator + tempFileName;
     }
 }

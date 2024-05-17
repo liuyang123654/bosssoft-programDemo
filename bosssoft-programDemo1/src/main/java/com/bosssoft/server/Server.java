@@ -16,7 +16,10 @@ import com.bosssoft.exception.ExceptionHandler;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.*;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @className: Server
@@ -31,7 +34,13 @@ public class Server {
 
     public Server(int port) throws IOException {
         serverSocket = new ServerSocket(1234);
-        pool = Executors.newFixedThreadPool(10);
+        pool = new ThreadPoolExecutor(
+                10,
+                10,
+                0L,
+                TimeUnit.MILLISECONDS,
+                new ArrayBlockingQueue<Runnable>(10)
+        );
     }
 
     public void startServer() {
@@ -100,7 +109,6 @@ public class Server {
             } catch (IOException e) {
                 //调用统一异常处理类
                 ExceptionHandler.handleException(e);
-                System.out.println("处理客户端数据时出错：" + e.getMessage());
             }
         }
     }

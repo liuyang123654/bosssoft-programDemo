@@ -20,7 +20,7 @@ import java.util.List;
 
 /**
  * @className: FileTransferTask
- * @description:这个类就是我们具体要观察的对象，即文件传输任务
+ * @description: 这个类就是我们具体要观察的对象，即文件传输任务
  * @author: LiuYang
  * @date: 2024/5/15 16:23
  * @since 1.0
@@ -31,23 +31,23 @@ public class FileTransferTask implements ISubject {
     // 文件传输状态
     private String status = "";
 
-
     /**
+     * 注册观察者，观察者若想获得消息，必须先注册
+     *
      * @param observer
-     * @description:注册观察者，观察者若想获得消息，必须先注册
-     * @author: LiuYang
-     * @date: 2024/05/15 16:38
-     **/
+     */
     @Override
     public void registerObserver(IObserver observer) {
         list.add(observer);
     }
 
     /**
-     * @description:广播消息
-     * @author: LiuYang
-     * @date: 2024/05/15 16:38
-     **/
+     * 广播消息
+     *
+     * @param bufferedWriter
+     * @throws IOException
+     * @throws ServiceException
+     */
     @Override
     public void notifyObservers(BufferedWriter bufferedWriter) throws IOException, ServiceException {
         if (!list.isEmpty()) {
@@ -58,10 +58,13 @@ public class FileTransferTask implements ISubject {
     }
 
     /**
-     * @description: 更新主题状态数据的方法, 一旦有更新，就通知所有观察者
-     * @author: LiuYang
-     * @date: 2024/05/15 16:52
-     **/
+     * 更新主题状态数据的方法, 一旦有更新，就通知所有观察者
+     *
+     * @param status
+     * @param bufferedWriter
+     * @throws IOException
+     * @throws ServiceException
+     */
     public void setStatus(String status, BufferedWriter bufferedWriter) throws IOException, ServiceException {
         this.status = status;
         notifyObservers(bufferedWriter); // 状态变化时通知观察者

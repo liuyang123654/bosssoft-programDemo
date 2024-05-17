@@ -16,7 +16,4 @@
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.47" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.30" level="project" />
   </component>
-  <component name="SonarLintModuleSettings">
-    <option name="uniqueId" value="95d6545b-2ca3-4b69-96f9-d01ed02ae962" />
-  </component>
 </module>

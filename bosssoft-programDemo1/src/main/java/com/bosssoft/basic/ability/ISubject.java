@@ -18,33 +18,33 @@ import java.io.IOException;
 
 /**
  * @className: ISubject
- * @description:
- * 观察的主题接口，FileTransferTask.java类实现了这个接口
+ * @description: 观察的主题接口，FileTransferTask.java类实现了这个接口
  * @author: LiuYang
  * @date: 2024/5/16 8:52
  * @since 1.0
  **/
 public interface ISubject {
+
     /**
+     * 注册观察者
+     *
      * @param observer
-     * @description: 注册观察者
-     * @author: LiuYang
-     * @date: 2024/05/16 08:58
-     **/
+     */
     void registerObserver(IObserver observer);
 
     /**
+     * 移除观察者
+     *
      * @param observer
-     * @description: 移除观察者
-     * @author: LiuYang
-     * @date: 2024/05/16 08:59
-     **/
+     */
     void removeObserver(IObserver observer);
 
     /**
-     * @description: 通知观察者
-     * @author: LiuYang
-     * @date: 2024/05/16 08:59
-     **/
+     * 通知观察者
+     *
+     * @param bufferedWriter
+     * @throws IOException
+     * @throws ServiceException
+     */
     void notifyObservers(BufferedWriter bufferedWriter) throws IOException, ServiceException;
 }

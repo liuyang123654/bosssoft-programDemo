@@ -1,3 +1,14 @@
+/**
+ * Copyright (C), 2001-2031, www.bosssoft.com.cn
+ * FileName: ExceptionHandler.java
+ * Author: ShaoWen
+ * Date: 2024/5/15 17:12
+ * Description:
+ * 异常处理机制
+ * History:
+ * Date          Author   Version  Desc
+ * 2024-01-01    bosssoft  1.0.0   initialize this file
+ */
 package com.bosssoft.entity;
 
 /**

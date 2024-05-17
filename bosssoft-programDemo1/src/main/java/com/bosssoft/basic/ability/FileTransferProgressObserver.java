@@ -17,7 +17,6 @@ import com.bosssoft.exception.ServiceException;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.rmi.ServerException;
 
 /**
  * @className: FileTransferProgressObserver
@@ -32,9 +31,6 @@ public class FileTransferProgressObserver implements IObserver {
     /**
      * @description:
      * 观察者被通知到，符合条件的话就更新信息
-     *
-     * @author: LiuYang
-     * @date: 2024/05/16 13:49
      * @param subject
      **/
     public void update(ISubject subject, BufferedWriter bufferedWriter) throws ServiceException, IOException {
@@ -47,9 +43,9 @@ public class FileTransferProgressObserver implements IObserver {
             } catch (IOException e) {
                 //调用异常处理类
                 ExceptionHandler.handleException(e);
-                throw new ServiceException(Code.IOEXCEPTION,e);
+                throw new ServiceException(Code.IOEXCEPTION, e);
 
-            }finally {
+            } finally {
                 bufferedWriter.close();
             }
         }

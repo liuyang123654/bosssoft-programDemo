@@ -13,22 +13,21 @@ package com.bosssoft.exception;
 
 /**
  * @className: ServiceException
- * @description:
- * 自定义业务异常
+ * @description: 自定义业务异常
  * @author: LiuYang
  * @date: 2024/5/15 17:14
  * @since 1.0
  **/
-public class ServiceException extends Exception{
+public class ServiceException extends Exception {
 
     /**
      * 自定义错误码
      **/
     private final int code;
 
-    public ServiceException(int code,Throwable throwable){
-        super(throwable.getMessage(),throwable);
-        this.code=code;
+    public ServiceException(int code, Throwable throwable) {
+        super(throwable.getMessage(), throwable);
+        this.code = code;
     }
 
     public int getCode() {

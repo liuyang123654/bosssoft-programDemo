@@ -1,7 +1,7 @@
 /**
  * Copyright (C), 2001-2031, www.bosssoft.com.cn
  * FileName: ExceptionHandler.java
- * Author: LiuYang,ShaoWen
+ * Author: ShaoWen
  * Date: 2024/5/15 17:12
  * Description:
  * 异常处理机制
@@ -27,18 +27,11 @@ public class ExceptionHandler {
     private static final Logger logger = LoggerFactory.getLogger(ExceptionHandler.class);
 
     /**
-     * 通用异常处理方法
-     *
-     * @param e 异常
-     */
-    /**
-     * @description:
      * 通用的异常处理方法
      * 有异常就会调用这个方法，进入这个方法后，在内部会分为各种不同的情况去处理：比如说自定义的业务异常、空指针异常、IO异常、其他未定义异常等
-     * @author: LiuYang
-     * @date: 2024/05/17 16:30
-     * @param e  异常
-     **/
+     *
+     * @param e
+     */
     public static void handleException(Throwable e) {
         if (e instanceof ServiceException) {
             handleServiceException((ServiceException) e);
@@ -56,7 +49,7 @@ public class ExceptionHandler {
      *
      * @param e 业务异常
      */
-    private static void handleServiceException(ServiceException e)  {
+    private static void handleServiceException(ServiceException e) {
         logger.error("错误码：{}; 发生业务异常！原因是：{}", e.getCode(), e.getMessage());
     }
 

@@ -40,7 +40,7 @@ public class SendCommand implements Command {
     }
 
     @Override
-    public void execute() throws IOException {
+    public void execute() throws IOException, ServiceException {
         //读取文件内容
         byte[] fileContent = Files.readAllBytes(Paths.get(filePath));
         //解密文件
